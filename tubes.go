@@ -132,6 +132,7 @@ func sort(a *tabTim, n int) {
 }
 
 func scoreT(a tabTim, n int) int {
+	//mencari score tertinggi
 	var i, tertinggi, hasil int
 	for i = 0; i < n; i++ {
 		if a[i].score < a[i+1].score {
@@ -183,18 +184,6 @@ func tampil(a tabTim, n int) {
 		}
 		fmt.Println()
 	}
-}
-
-func banding(a *tabTim, x string, n int) int {
-	// untuk membandingkan score tertinggi
-	var result, i int
-
-	for i = 0; i < n; i++ {
-		if a[i].nama == x {
-			result = i
-		}
-	}
-	return result
 }
 
 func edit(a *tabTim, x string, n int) {
