@@ -60,7 +60,7 @@ func main() {
 		} else if inputan == 2 {
 			// untuk mencari tim dengan score tertinggi
 			var pos int
-			pos = binarySearchGoalTertinggi(data, nData)
+			pos = scoreT(data, nData)
 			if pos != -1 {
 				fmt.Println("tim dengan score tertinggi:")
 				fmt.Printf("%-10s\t\t\t menang:%v kalah:%v seri:%v goal:%v kebobolan:%v score:%v\n", data[pos].nama, data[pos].win, data[pos].lose, data[pos].seri, data[pos].goal, data[pos].kebobolan, data[pos].score)
@@ -131,12 +131,8 @@ func sort(a *tabTim, n int) {
 	}
 }
 
-func binarySearchGoalTertinggi(a tabTim, n int) int {
-	// melakukan search binary
-	var left, right, mid, tertinggi, hasil, i int
-	left = 0
-	right = n - 1
-	// mencari nilai tertinggi score
+func scoreT(a tabTim, n int) int {
+	var i, tertinggi, hasil int
 	for i = 0; i < n; i++ {
 		if a[i].score < a[i+1].score {
 			tertinggi = i + 1
@@ -147,17 +143,25 @@ func binarySearchGoalTertinggi(a tabTim, n int) int {
 	if a[tertinggi].score == 0 {
 		hasil = -1
 	}
+	return hasil
+
+}
+
+func binarySearch(a tabTim, n int, nama string) int {
+	// melakukan search binary
+	var left, right, mid, hasil int
+	left = 0
+	right = n - 1
 
 	// memastikan nilai bahwa ada tim dengan nilai tertinggi
 	for left <= right {
 		mid = (left + right) / 2
-		if a[mid].score == a[tertinggi].score {
+		if a[mid].nama == nama {
 			hasil = mid
 		}
 
-		if a[mid].score < a[tertinggi].score {
+		if a[mid].nama != nama {
 			left = mid + 1
-		} else {
 			right = mid - 1
 		}
 
@@ -197,7 +201,7 @@ func edit(a *tabTim, x string, n int) {
 	// procedure mengedit data tim
 	var pilihan, win, lose, seri, goal, kebobolan, hasil int
 	var nama string
-	hasil = banding(a, x, n)
+	hasil = binarySearch(*a, n, x)
 	if a[hasil].nama == x {
 		fmt.Println("pilih data yang ingin diganti:")
 		fmt.Println("1. ganti nama tim")
