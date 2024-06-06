@@ -345,6 +345,17 @@ func tambahdata(a *tabTim, n *int) {
 
 	fmt.Println("masukkan banyak tim:")
 	fmt.Scan(&batas)
+
+	if batas > NMAX {
+		fmt.Println("jumlah data melebihi batas, maka jumlah data dijadikan sebanyak batas")
+		batas = NMAX
+	}
+
+	if *n > NMAX {
+		fmt.Println("jumlah data melebihi batas, maka jumlah data dijadikan sebanyak batas")
+		*n = NMAX
+	}
+
 	for i = *n; i < *n+batas; i++ {
 		fmt.Println("nama tim, menang, kalah, seri, goal, kebobolan tim(note: data jangan lebih dari 5 data):")
 		fmt.Scan(&a[i].nama, &a[i].win, &a[i].lose, &a[i].seri, &a[i].goal, &a[i].kebobolan)
