@@ -94,14 +94,10 @@ func main() {
 			cetakAnggota(data, nData, batas)
 		} else if inputan == 7 {
 			// melakukan edit data tim
-			if nData == 0 {
-				fmt.Println("tidak ada data")
-				fmt.Println()
-			} else {
-				fmt.Println("inputkan nama tim")
-				fmt.Scan(&nama)
-				edit(&data, nama, nData)
-			}
+			fmt.Println("inputkan nama tim")
+			fmt.Scan(&nama)
+			edit(&data, nama, nData)
+
 		} else if inputan == 8 {
 			// melakukan pencarian tim menggunakan data anggota tim
 			cariPanggota(data, nData, batas)
@@ -133,39 +129,37 @@ func sort(a *tabTim, n int) {
 
 func scoreT(a tabTim, n int) int {
 	//mencari score tertinggi
-	var i, tertinggi, hasil int
-	for i = 0; i < n; i++ {
-		if a[i].score < a[i+1].score {
-			tertinggi = i + 1
-		} else {
-			tertinggi = i
-		}
-	}
-	if a[tertinggi].score == 0 {
-		hasil = -1
-	}
-	return hasil
-
-}
-
-func binarySearch(a tabTim, n int, nama string) int {
-	// melakukan search binary
-	var left, right, mid, hasil int
+	var i, tertinggi, left, right, mid int
 	left = 0
 	right = n - 1
 
-	// memastikan nilai bahwa ada tim dengan nilai tertinggi
-	for left <= right {
+	for i > 0 {
 		mid = (left + right) / 2
-		if a[mid].nama == nama {
-			hasil = mid
+		if a[mid].score == a[n].score {
+			tertinggi = mid
 		}
 
-		if a[mid].nama != nama {
+		if a[mid].score < a[n].score {
 			left = mid + 1
+		} else if a[mid].score > a[n].score {
 			right = mid - 1
 		}
+	}
+	return tertinggi
+}
 
+func searchnama(a tabTim, n int, nama string) int {
+	// melakukan search nama tim
+	var i, hasil int
+	for i = 0; i < n; i++ {
+		if a[i].nama != nama {
+			hasil = i + 1
+		} else {
+			hasil = i
+		}
+	}
+	if i > n {
+		hasil = -1
 	}
 	return hasil
 
@@ -190,7 +184,7 @@ func edit(a *tabTim, x string, n int) {
 	// procedure mengedit data tim
 	var pilihan, win, lose, seri, goal, kebobolan, hasil int
 	var nama string
-	hasil = binarySearch(*a, n, x)
+	hasil = searchnama(*a, n, x)
 	if a[hasil].nama == x {
 		fmt.Println("pilih data yang ingin diganti:")
 		fmt.Println("1. ganti nama tim")
